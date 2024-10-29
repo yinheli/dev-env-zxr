@@ -13,6 +13,10 @@ ifeq ($(UNAME_S),Linux)
 	@rm get_helmfile.sh
 else ifeq ($(UNAME_S),Darwin)
 	@echo "Installing helmfile for macOS..."
+	@if ! command -v brew >/dev/null 2>&1; then \
+		echo "Installing Homebrew..."; \
+		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
+	fi
 	@brew install helmfile
 else
 	$(error Unsupported operating system: $(UNAME_S))
@@ -63,12 +67,17 @@ fetch: prepare-env
 
 .PHONY: prepare-env
 prepare-env:
-	cp $(CURDIR)/values/env-template.yaml $(CURDIR)/values/.env-default.yaml
-	@echo "Updating hostPath in env-default.yaml..."
-	@parent_dir=$$(realpath $(CURDIR)/..); \
-	sed -i.bak "s|hostPath: \.\./|hostPath: $$parent_dir/|g" $(CURDIR)/values/.env-default.yaml
-	@rm $(CURDIR)/values/.env-default.yaml.bak
-	@echo "Paths updated successfully."
+	@echo "updating host paths using script..."
+	@if ! command -v bun > /dev/null; then \
+		echo "Bun is not installed. Installing Bun..."; \
+		curl -fsSL https://bun.sh/install | bash; \
+		export BUN_INSTALL="$HOME/.bun"; \
+		export PATH="$BUN_INSTALL/bin:$PATH"; \
+	fi
+	@BUN_INSTALL_REGISTRY="https://registry.npmmirror.com" \
+		bun run update-path.ts \
+		values/env-template.yaml \
+		values/.env-default.yaml
 
 # Help command
 .PHONY: help

@@ -4,10 +4,6 @@ Dockerfile
 *.dockerfile
 
 # TypeScript
-*.ts
-*.tsx
-*.js
-*.js.map
 node_modules/
 dist/
 build/

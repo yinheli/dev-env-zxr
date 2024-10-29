@@ -5,7 +5,7 @@ services:
     #   echo "Hello, World!"
     volumes:
       - name: local-path
-        hostPath: ../services/activity-rpc
+        hostPath: ../../services/activity-rpc
     volumeMounts:
       - name: local-path
         mountPath: /app/local-path
