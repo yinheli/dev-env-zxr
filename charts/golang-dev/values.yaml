@@ -77,6 +77,13 @@ volumeMounts: []
 #   mountPath: "/etc/foo"
 #   readOnly: true
 
+# hostAliases:
+#   - ip: 192.168.1.1
+#     hostnames:
+#       - foo.local
+#       - bar.local
+hostAliases: []
+
 nodeSelector: {}
 tolerations: []
 affinity: {}

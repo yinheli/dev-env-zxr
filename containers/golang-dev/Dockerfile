@@ -12,7 +12,6 @@ RUN go install github.com/air-verse/air@v1.61.1
 RUN go install github.com/google/gops@v0.3.28
 
 ENV \
-  GOFLAGS="-gcflags=all=-N -l" \
   GOFILE="main.go" \
   DLV_DEBUG_PORT=40000
 
