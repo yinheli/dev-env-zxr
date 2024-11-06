@@ -17,7 +17,7 @@ else ifeq ($(UNAME_S),Darwin)
 		echo "Installing Homebrew..."; \
 		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
 	fi
-	@brew install helmfile
+	@brew install helmfile helm
 else
 	$(error Unsupported operating system: $(UNAME_S))
 endif
@@ -67,7 +67,10 @@ fetch: prepare-env
 
 .PHONY: prepare-env
 prepare-env:
-	@echo "updating host paths using script..."
+	@if [ -f "values/.env-default.yaml" ]; then \
+		exit 0; \
+	fi; \
+	@echo "updating host paths using script..."; \
 	@bash -c 'if ! command -v bun > /dev/null; then \
 		echo "Bun is not installed. Installing Bun..."; \
 		curl -fsSL https://bun.sh/install | bash; \
