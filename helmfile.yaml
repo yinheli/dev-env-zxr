@@ -60,7 +60,7 @@ releases:
       - serviceDependencies:
           {{- range $dep := $serviceConfig.dependencies }}
           {{- if eq $dep "etcd" }}
-          etcd: etcd:2379
+          etcd: "etcd:2379"
           {{- else }}
           {{- $depConfig := index $.Environment.Values.services $dep }}
           {{ $dep }}: "{{ $dep }}:{{ $depConfig.port }}"
