@@ -47,7 +47,7 @@ releases:
         {{- toYaml $serviceConfig.volumeMounts | nindent 8 }}
       {{- end }}
       {{- $hostAliases := list }}
-      {{- if $.Environment.Values.hostAliases }}
+      {{- if hasKey $.Environment.Values "hostAliases" }}
         {{- $hostAliases = $.Environment.Values.hostAliases }}
       {{- end }}
       {{- if hasKey $serviceConfig "hostAliases" }}
