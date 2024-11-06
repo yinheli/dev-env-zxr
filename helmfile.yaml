@@ -22,6 +22,7 @@ releases:
     #   {{- end }}
     # {{- end }}
     values:
+      - nameOverride: {{ $serviceName }}
       - service:
           port: {{ $serviceConfig.port }}
       {{- if hasKey $serviceConfig "cmd" }}
