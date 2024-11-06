@@ -45,9 +45,13 @@ releases:
       - volumeMounts:
         {{- toYaml $serviceConfig.volumeMounts | nindent 8 }}
       {{- end }}
+      {{- $hostAliases := $.Environment.Values.hostAliases | default list }}
       {{- if hasKey $serviceConfig "hostAliases" }}
+        {{- $hostAliases = concat $hostAliases $serviceConfig.hostAliases }}
+      {{- end }}
+      {{- if $hostAliases }}
       - hostAliases:
-        {{- toYaml $serviceConfig.hostAliases | nindent 8 }}
+        {{- toYaml $hostAliases | nindent 8 }}
       {{- end }}
       {{- if hasKey $serviceConfig "dependencies" }}
       - serviceDependencies:
