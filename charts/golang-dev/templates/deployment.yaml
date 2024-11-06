@@ -28,7 +28,7 @@ spec:
       {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if .Values.serviceDependencies }}
+      {{- if not (empty .Values.serviceDependencies) }}
       initContainers:
         - name: wait-for-dependencies
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -44,7 +44,8 @@ spec:
             - |
               echo "Waiting for dependencies to be ready..."
               {{- range $service, $address := .Values.serviceDependencies }}
-              until nc -z -w 2 {{ $address | split ":" | first }} {{ $address | split ":" | last }}; do
+              {{- $parts := splitList ":" $address }}
+              until nc -z -w 2 {{ $parts | first }} {{ $parts | last }}; do
                 echo "Waiting for {{ $service }} at {{ $address }}..."
                 sleep 2
               done
