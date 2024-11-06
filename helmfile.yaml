@@ -15,12 +15,12 @@ releases:
   - name: {{ $serviceName }}
     namespace: dev
     chart: ./charts/golang-dev
-    {{- if hasKey $serviceConfig "dependencies" }}
-    needs:
-      {{- range $dep := $serviceConfig.dependencies }}
-      - {{ $dep }}
-      {{- end }}
-    {{- end }}
+    # {{- if hasKey $serviceConfig "dependencies" }}
+    # needs:
+    #   {{- range $dep := $serviceConfig.dependencies }}
+    #   - {{ $dep }}
+    #   {{- end }}
+    # {{- end }}
     values:
       - service:
           port: {{ $serviceConfig.port }}
@@ -39,14 +39,7 @@ releases:
       {{- end }}
       {{- if hasKey $serviceConfig "volumes" }}
       - volumes:
-        {{- range $volume := $serviceConfig.volumes }}
-        - name: {{ $volume.name }}
-          {{- if hasKey $volume "hostPath" }}
-          hostPath: {{ $volume.hostPath }}
-          {{- else }}
-          {{- toYaml $volume | nindent 10 }}
-          {{- end }}
-        {{- end }}
+        {{- toYaml $serviceConfig.volumes | nindent 8 }}
       {{- end }}
       {{- if hasKey $serviceConfig "volumeMounts" }}
       - volumeMounts:
