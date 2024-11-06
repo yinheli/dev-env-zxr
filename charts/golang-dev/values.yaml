@@ -11,8 +11,8 @@ cmd: |
 
 # grpc service dependencies, use service name as key, and service address as value
 # if dependencies is not empty, the init container will be added to the pod and will wait for the dependencies to be ready
-serviceDependencies:
-  xxx: "xxx.svc:1080"
+serviceDependencies: {}
+  # xxx: "xxx.svc:1080"
 
 imagePullSecrets: []
 nameOverride: ""
