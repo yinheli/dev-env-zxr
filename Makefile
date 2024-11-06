@@ -70,8 +70,8 @@ prepare-env:
 	@if [ -f "values/.env-default.yaml" ]; then \
 		exit 0; \
 	fi; \
-	@echo "updating host paths using script..."; \
-	@bash -c 'if ! command -v bun > /dev/null; then \
+	echo "updating host paths using script..."; \
+	bash -c 'if ! command -v bun > /dev/null; then \
 		echo "Bun is not installed. Installing Bun..."; \
 		curl -fsSL https://bun.sh/install | bash; \
 		export BUN_INSTALL="$$HOME/.bun"; \

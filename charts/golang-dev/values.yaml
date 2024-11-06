@@ -6,8 +6,8 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-# cmd: |
-#   dlv debug --headless --listen=:40000 --api-version=2 --accept-multiclient --log main.go
+cmd: |
+  dlv debug --headless --listen=:40000 --api-version=2 --accept-multiclient --log main.go
 
 # grpc service dependencies, use service name as key, and service address as value
 # if dependencies is not empty, the init container will be added to the pod and will wait for the dependencies to be ready
