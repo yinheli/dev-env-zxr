@@ -25,9 +25,15 @@ releases:
       - nameOverride: {{ $serviceName }}
       - service:
           port: {{ $serviceConfig.port }}
+      {{- $cmd := "" }}
       {{- if hasKey $serviceConfig "cmd" }}
-        cmd: |-
-          {{- $serviceConfig.cmd | nindent 10 }}
+        {{- $cmd = $serviceConfig.cmd }}
+      {{- else if hasKey $.Environment.Values "cmd" }}
+        {{- $cmd = $.Environment.Values.cmd }}
+      {{- end }}
+      {{- if ne $cmd "" }}
+      - cmd: |-
+        {{- $cmd | nindent 10 }}
       {{- end }}
       {{- if hasKey $serviceConfig "ingress" }}
       - ingress:

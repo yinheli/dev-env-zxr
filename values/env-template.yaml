@@ -1,3 +1,14 @@
+# global config
+#
+#
+# hostAliases:
+#   - ip: 192.168.1.1
+#     hostnames:
+#       - foo.local
+#
+# cmd: |-
+#   echo "Hello, World!"
+
 services:
   activity-rpc:
     port: 8087
