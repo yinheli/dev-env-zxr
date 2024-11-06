@@ -1,5 +1,5 @@
 helmDefaults:
-  wait: true
+  wait: false
   atomic: true
   timeout: 600
 
