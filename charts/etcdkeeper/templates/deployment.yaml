@@ -40,7 +40,6 @@ spec:
             - "0.0.0.0"
             - "-p"
             - {{ .Values.service.port | quote }}
-            - "-auth"
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
