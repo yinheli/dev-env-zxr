@@ -37,7 +37,7 @@ releases:
       {{- end }}
       {{- if ne $cmd "" }}
         cmd: |-
-        {{- $cmd | nindent 10 }}
+          {{- $cmd | nindent 10 }}
       {{- end }}
       {{- if hasKey $serviceConfig "ingress" }}
         ingress:

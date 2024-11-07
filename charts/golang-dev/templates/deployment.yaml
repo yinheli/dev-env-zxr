@@ -81,8 +81,8 @@ spec:
           command:
             - /bin/sh
             - -c
-            - |
-              {{ .Values.cmd }}
+            - |-
+              {{- .Values.cmd | nindent 14 }}
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
