@@ -74,6 +74,9 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+            - name: debug
+              containerPort: 40000
+              protocol: TCP
           {{- if .Values.cmd }}
           command:
             - /bin/sh

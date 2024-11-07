@@ -11,5 +11,9 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: 40000
+      targetPort: debug
+      protocol: TCP
+      name: debug
   selector:
     {{- include "golang-dev.selectorLabels" . | nindent 4 }}
