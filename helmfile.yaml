@@ -23,8 +23,12 @@ releases:
     # {{- end }}
     values:
       - nameOverride: {{ $serviceName }}
-      - service:
+        service:
           port: {{ $serviceConfig.port }}
+      {{- if hasKey $serviceConfig "envVars" }}
+        envVars:
+          {{- toYaml $serviceConfig.envVars | nindent 10 }}
+      {{- end }}
       {{- $cmd := "" }}
       {{- if hasKey $serviceConfig "cmd" }}
         {{- $cmd = $serviceConfig.cmd }}
@@ -32,11 +36,11 @@ releases:
         {{- $cmd = $.Environment.Values.cmd }}
       {{- end }}
       {{- if ne $cmd "" }}
-      - cmd: |-
+        cmd: |-
         {{- $cmd | nindent 10 }}
       {{- end }}
       {{- if hasKey $serviceConfig "ingress" }}
-      - ingress:
+        ingress:
           enabled: true
           hosts:
             - host: {{ $serviceName }}.local
@@ -44,13 +48,27 @@ releases:
                 - path: /
                   pathType: Prefix
       {{- end }}
+      {{- $volumes := list }}
+      {{- if hasKey $.Environment.Values "volumes" }}
+        {{- $volumes = $.Environment.Values.volumes }}
+      {{- end }}
       {{- if hasKey $serviceConfig "volumes" }}
-      - volumes:
-        {{- toYaml $serviceConfig.volumes | nindent 8 }}
+        {{- $volumes = concat $volumes $serviceConfig.volumes }}
+      {{- end }}
+      {{- if ne (len $volumes) 0 }}
+        volumes:
+          {{- toYaml $volumes | nindent 8 }}
+      {{- end }}
+      {{- $volumeMounts := list }}
+      {{- if hasKey $.Environment.Values "volumeMounts" }}
+        {{- $volumeMounts = $.Environment.Values.volumeMounts }}
       {{- end }}
       {{- if hasKey $serviceConfig "volumeMounts" }}
-      - volumeMounts:
-        {{- toYaml $serviceConfig.volumeMounts | nindent 8 }}
+        {{- $volumeMounts = concat $volumeMounts $serviceConfig.volumeMounts }}
+      {{- end }}
+      {{- if ne (len $volumeMounts) 0 }}
+        volumeMounts:
+          {{- toYaml $volumeMounts | nindent 8 }}
       {{- end }}
       {{- $hostAliases := list }}
       {{- if hasKey $.Environment.Values "hostAliases" }}
@@ -60,11 +78,11 @@ releases:
         {{- $hostAliases = concat $hostAliases $serviceConfig.hostAliases }}
       {{- end }}
       {{- if $hostAliases }}
-      - hostAliases:
-        {{- toYaml $hostAliases | nindent 8 }}
+        hostAliases:
+          {{- toYaml $hostAliases | nindent 8 }}
       {{- end }}
       {{- if hasKey $serviceConfig "dependencies" }}
-      - serviceDependencies:
+        serviceDependencies:
           {{- range $dep := $serviceConfig.dependencies }}
           {{- if eq $dep "etcd" }}
           etcd: "etcd:2379"

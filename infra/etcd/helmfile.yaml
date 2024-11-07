@@ -19,3 +19,11 @@ releases:
           rbac:
             create: false
         replicaCount: 1
+
+  - name: etcdkeeper
+    namespace: dev
+    chart: ../../charts/etcdkeeper
+    values:
+      - image:
+          repository: registry.cn-hangzhou.aliyuncs.com/rshenry/evildecay-etcdkeeper
+

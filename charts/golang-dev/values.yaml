@@ -6,6 +6,13 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+strategy:
+  # type: RollingUpdate
+  # rollingUpdate:
+  #   maxUnavailable: 25%
+  #   maxSurge: 25%
+  type: Recreate
+
 cmd: |
   dlv debug --output .__debug_bin --headless --listen=:40000 --api-version=2 --accept-multiclient --log main.go
 
@@ -63,6 +70,8 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+envVars: {}
 
 # Additional volumes on the output Deployment definition.
 volumes: []
