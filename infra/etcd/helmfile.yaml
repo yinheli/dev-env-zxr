@@ -12,8 +12,9 @@ releases:
     version: 10.4.1
     values:
       - image:
+          # https://github.com/yinheli/image-sync-actions/blob/ff63cdb049d0e5429f60719df3efcd253348887c/images.yaml#L5
           registry: registry.cn-hangzhou.aliyuncs.com
-          repository: rshenry/etcd
+          repository: rshenry/bitnami-etcd
           tag: 3.5.16-debian-12-r2
         auth:
           rbac:
