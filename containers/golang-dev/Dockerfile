@@ -1,4 +1,4 @@
-FROM --platform=$TARGETPLATFORM golang:1.20.14-bookworm
+FROM --platform=$TARGETPLATFORM golang:1.21.13-bookworm
 
 ENV \
   TZ=Asia/Shanghai \
