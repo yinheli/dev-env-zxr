@@ -1,4 +1,4 @@
-FROM --platform=$TARGETPLATFORM golang:1.21.13-bookworm
+FROM golang:1.21.13-bookworm
 
 ENV \
   TZ=Asia/Shanghai \
@@ -9,7 +9,8 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y tzdata tmux git vim curl wget unzip strace htop lsof net-tools netcat-openbsd iputils-ping tree procps && rm -rf /var/lib/apt/lists/*
 RUN git config --global credential.helper store
 RUN go install github.com/go-delve/delve/cmd/dlv@v1.23.1
-RUN go install github.com/air-verse/air@v1.49.0
+# RUN go install github.com/air-verse/air@latest
+RUN go install github.com/cosmtrek/air@v1.49.0
 RUN go install github.com/google/gops@v0.3.28
 
 ENV \
